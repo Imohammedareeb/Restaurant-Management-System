@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    .reservation-info {
+        background-color: #f5f5f5;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    textarea {
+        min-height: 120px;
+    }
+    .btn-submit {
+        background-color: #8b4513;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+    .btn-submit:hover {
+        background-color: #a0522d;
+    }
+    .error-message {
+        color: red;
+        margin-top: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="reservations">
+    <h3>Make a Reservation</h3>
+    
+    <div class="reservation-info">
+        <p>For parties of 8 or more, please call us directly at (555) 123-4567.</p>
+        <p>We hold reservations for 15 minutes past the booked time.</p>
+    </div>
+    
+    <form action="{{ url_for('reservations') }}" method="post">
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">Date *</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="time">Time *</label>
+            <input type="time" id="time" name="time" required min="11:00" max="22:00">
+        </div>
+        
+        <div class="form-group">
+            <label for="guests">Number of Guests *</label>
+            <select id="guests" name="guests" required>
+                <option value="" disabled selected>Select...</option>
+                {% for i in range(1, 8) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+                <option value="8">8+ (Please call)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="requests">Special Requests</label>
+            <textarea id="requests" name="requests" placeholder="Dietary restrictions, allergies, special occasions..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn-submit">Reserve Table</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date to today
+    const dateInput = document.getElementById('date');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+        
+        // Reset errors
+        document.querySelectorAll('.error-message').forEach(el => el.remove());
+        
+        // Validate date
+        const selectedDate = new Date(dateInput.value);
+        const todayObj = new Date();
+        todayObj.setHours(0, 0, 0, 0);
+        
+        if (selectedDate < todayObj) {
+            isValid = false;
+            showError(dateInput, 'Please select a future date');
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+    
+    function showError(input, message) {
+        const error = document.createElement('div');
+        error.className = 'error-message';
+        error.textContent = message;
+        input.parentNode.appendChild(error);
+    }
+});
+</script>
+{% endblock %}

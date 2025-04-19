@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Team Section */
+.team {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.team h4 {
+    color: #8b4513;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.team h4::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #d2b48c;
+    margin: 1rem auto;
+}
+
+.team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.team-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+}
+
+.team-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 3px solid #d2b48c;
+}
+
+.team-info {
+    padding: 1.5rem;
+}
+
+.team-info h5 {
+    color: #8b4513;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-position {
+    color: #d35400;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.team-bio {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .team-members {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .team-card {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+</style>
+<section id="about">
+    <h3>Our Story</h3>
+    <p>Founded in 2010, Savory Bistro has been serving exceptional cuisine in a warm, inviting atmosphere. Our chef, <strong>Michelle Laurent</strong>, brings 20 years of international culinary experience to every dish.</p>
+    
+    <div class="philosophy">
+        <h4>Our Philosophy</h4>
+        <ul>
+            <li>Using only the freshest, locally-sourced ingredients</li>
+            <li>Creating dishes that celebrate seasonal flavors</li>
+            <li>Providing exceptional service in a welcoming atmosphere</li>
+            <li>Sustainable practices that respect our environment</li>
+        </ul>
+        <p>We're proud to be a <strong>zero-waste kitchen</strong>, finding creative uses for all our ingredients.</p>
+    </div>
+    
+    <div class="team">
+        <h4>Meet Our Team</h4>
+        <div class="team-members">
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/chef.jpg') }}" alt="Head Chef" class="team-img">
+                <div class="team-info">
+                    <h5>Michelle Laurent</h5>
+                    <p class="team-position">Head Chef</p>
+                    <p class="team-bio">20 years of culinary expertise with a passion for French-Asian fusion.</p>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/sous-chef.jpg') }}" alt="Sous Chef" class="team-img">
+                <div class="team-info">
+                    <h5>James Wilson</h5>
+                    <p class="team-position">Sous Chef</p>
+                    <p class="team-bio">Specializes in Mediterranean cuisine and pastry arts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

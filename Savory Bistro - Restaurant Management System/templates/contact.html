@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    .contact-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    .contact-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .contact-card h4 {
+        color: #8b4513;
+        margin-top: 0;
+        border-bottom: 1px solid #d2b48c;
+        padding-bottom: 0.5rem;
+    }
+    .map-container {
+        margin-top: 2rem;
+    }
+    iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="contact">
+    <h3>Get In Touch</h3>
+    
+    <div class="contact-methods">
+        <div class="contact-card">
+            <h4>Visit Us</h4>
+            <address>
+                123 Culinary Avenue<br>
+                Foodie City, FC 12345<br>
+                United States
+            </address>
+        </div>
+        
+        <div class="contact-card">
+            <h4>Call Us</h4>
+            <p>Reservations: <a href="tel:5551234567">(555) 123-4567</a></p>
+            <p>General Inquiries: <a href="tel:5551234568">(555) 123-4568</a></p>
+        </div>
+        
+        <div class="contact-card">
+            <h4>Email Us</h4>
+            <p>Reservations: <a href="mailto:reservations@savorybistro.com">reservations@savorybistro.com</a></p>
+            <p>General: <a href="mailto:info@savorybistro.com">info@savorybistro.com</a></p>
+            <p>Private Events: <a href="mailto:events@savorybistro.com">events@savorybistro.com</a></p>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <h4>Find Us</h4>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209132873!2d-73.9878449245256!3d40.74844097138985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ0JzU0LjQiTiA3M8KwNTknMTkuMiJX!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    
+</section>
+{% endblock %}
