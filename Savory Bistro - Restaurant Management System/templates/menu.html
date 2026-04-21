@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    /* Menu Header */
+    .menu-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .menu-header h3 {
+        font-size: 2.2rem;
+        color: #8b4513;
+        margin-bottom: 1rem;
+    }
+    .menu-intro {
+        max-width: 800px;
+        margin: 0 auto;
+        color: #555;
+    }
+
+    /* Menu Categories */
+    .menu-category {
+        margin-bottom: 3rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .menu-category h4 {
+        color: #a0522d;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #d2b48c;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+    }
+
+    /* Menu Items */
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px dashed #d2b48c;
+        transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+        transform: translateX(5px);
+    }
+    .item-info {
+        flex: 1;
+    }
+    .item-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+    }
+    .item-price {
+        color: #8b4513;
+        font-weight: bold;
+        font-size: 1.1rem;
+        min-width: 80px;
+        text-align: right;
+    }
+    .item-description {
+        color: #666;
+        font-style: italic;
+        margin-top: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* Special Items */
+    .special-item {
+        background-color: #fff8e1;
+        padding: 1.2rem;
+        border-radius: 8px;
+        border-left: 4px solid #d35400;
+    }
+    .special-offer {
+        display: inline-block;
+        background-color: #d35400;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        font-style: normal;
+    }
+
+    /* Menu Footer */
+    .menu-footer {
+        margin-top: 3rem;
+        text-align: center;
+        padding: 1.5rem;
+        background-color: #f9f5f0;
+        border-radius: 8px;
+    }
+    .allergy-info {
+        font-style: italic;
+        color: #666;
+    }
+    .seasonal-note {
+        margin-top: 1rem;
+        font-weight: bold;
+        color: #8b4513;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .menu-item {
+            flex-direction: column;
+        }
+        .item-price {
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="menu">
+    <div class="menu-header">
+        <h3>Our Culinary Offerings</h3>
+        <p class="menu-intro">Each dish is carefully crafted using seasonal, locally-sourced ingredients. Our menu changes regularly to reflect the freshest available produce and our chef's creative inspiration.</p>
+    </div>
+    
+    <!-- Appetizers -->
+    {% for category in menu_categories %}
+    <div class="menu-category">
+        <h4>{{ category }}</h4>
+        
+        {% for item in menu_items if item['category'] == category %}
+        <div class="menu-item {{ 'special-item' if item['is_special'] else '' }}">
+            <div class="item-info">
+                <div class="item-name">{{ item['name'] }}</div>
+                <div class="item-description">{{ item['description'] }}</div>
+                {% if item['is_special'] %}
+                <span class="special-offer">Chef's Special!</span>
+                {% endif %}
+            </div>
+            <div class="item-price">${{ "%.2f"|format(item['price']) }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="menu-footer">
+        <p class="allergy-info">Please inform your server of any food allergies or dietary restrictions. We'll do our best to accommodate your needs.</p>
+        <p class="seasonal-note">* Menu items may change based on seasonal availability</p>
+    </div>
+</section>
+{% endblock %}
