@@ -10,7 +10,7 @@ Savory Bistro is a sophisticated, full-stack web application designed to streaml
 ---
 
 ## 🚀 Live Demo
-**[View Live Project on Vercel](https://restaurant-management-system-iota.vercel.app/)** *(Note: Replace with your actual link after deployment)*
+**[View Live Project on Vercel](https://restaurant-management-system-hazel-seven.vercel.app/)**
 
 ---
 
