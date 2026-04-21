@@ -7,9 +7,14 @@ import re
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
-# SQLite Configuration
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'savory_bistro.db')
+# SQLite Configuration for Vercel (using /tmp for write access)
+if os.environ.get('VERCEL'):
+    db_path = '/tmp/savory_bistro.db'
+else:
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    db_path = os.path.join(basedir, 'savory_bistro.db')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -107,7 +112,7 @@ def reservations():
                 flash('Number of guests must be at least 1.', 'error')
                 return redirect(url_for('reservations'))
 
-            # 4. Capacity Check (Example: Max 30 guests per hour/slot)
+            # 4. Capacity Check
             total_guests_at_time = db.session.query(db.func.sum(Reservation.guests)).filter(
                 Reservation.date == date_str,
                 Reservation.time == time_str
@@ -141,8 +146,6 @@ def contact():
 # Initialize database and seed data
 def init_db():
     with app.app_context():
-        # Drop existing database to apply new schema changes if necessary
-        # db.drop_all() 
         db.create_all()
         if MenuItem.query.count() == 0:
             sample_items = [
@@ -158,6 +161,8 @@ def init_db():
             db.session.bulk_save_objects(sample_items)
             db.session.commit()
 
+# Ensure DB is initialized
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)
